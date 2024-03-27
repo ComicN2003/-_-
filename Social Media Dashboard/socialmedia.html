@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #loginForm {
+      display: none;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    #dashboard {
+      display: none;
+      padding: 20px;
+    }
+
+    #feed {
+      margin-top: 20px;
+    }
+
+    .post {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .post img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .post p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Social Media Dashboard</h1>
+    <button id="loginBtn">Log In</button>
+  </header>
+
+  <div id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <div id="dashboard">
+    <h2>Welcome, <span id="usernameDisplay"></span>!</h2>
+    <button id="logoutBtn">Log Out</button>
+    <div id="feed"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginBtn = document.getElementById('loginBtn');
+      const loginForm = document.getElementById('loginForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const dashboard = document.getElementById('dashboard');
+      const usernameDisplay = document.getElementById('usernameDisplay');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const feed = document.getElementById('feed');
+
+      loginBtn.addEventListener('click', function() {
+        loginForm.style.display = 'block';
+        loginBtn.style.display = 'none';
+      });
+
+      submitBtn.addEventListener('click', function() {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+
+        if (username && password) {
+          loginForm.style.display = 'none';
+          dashboard.style.display = 'block';
+          usernameDisplay.textContent = username;
+          displayFeeds();
+        } else {
+          alert('Please enter username and password');
+        }
+      });
+
+      logoutBtn.addEventListener('click', function() {
+        loginForm.style.display = 'block';
+        dashboard.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+        usernameInput.value = '';
+        passwordInput.value = '';
+      });
+
+      function displayFeeds() {
+        const mockFeed = [
+          { username: 'DinoTruther', text: 'Breaking News: Dinosaurs are alive !' },
+          { username: 'DogLover1102', text: 'T-rex ate my dog.' },
+          { username: 'RealDino_12', text: 'Fake News !' }
+        ];
+
+        feed.innerHTML = '';
+
+        mockFeed.forEach(post => {
+          const postElement = document.createElement('div');
+          postElement.classList.add('post');
+          postElement.innerHTML = `
+            <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTj7O2_aWsCfE8fv_Q2JZu2efhUbDgRZ_fpomeUti1RHP4aSDNsvQcjnG36UpvMIS3nYwLzGQfAQ3LwMlI" alt="Profile Picture">
+            <p><strong>${post.username}</strong>: ${post.text}</p>
+          `;
+          feed.appendChild(postElement);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
